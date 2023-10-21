@@ -44,8 +44,7 @@ public class FunRand {
      * @return a random value according to a normal (Gauss)
      * distribution
      */
-    public static double Norm(double timeMean, double
-            timeDeviation) {
+    public static double Norm(double timeMean, double timeDeviation) {
         double a;
         Random r = new Random();
         a = timeMean + timeDeviation * r.nextGaussian();

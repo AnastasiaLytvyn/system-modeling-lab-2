@@ -1,9 +1,10 @@
 import java.util.ArrayList;
 
 public class Model {
-    private ArrayList<Element> list = new ArrayList<>();
+    private final ArrayList<Element> list;
     double tnext, tcurr;
     int event;
+    String eventName;
 
     public Model(ArrayList<Element> elements) {
         list = elements;
@@ -19,11 +20,10 @@ public class Model {
                 if (e.getTnext() < tnext) {
                     tnext = e.getTnext();
                     event = e.getId();
+                    eventName = e.getName();
                 }
             }
-            System.out.println("\nIt's time for event in " +
-                    list.get(event).getName() +
-                    ", time = " + tnext);
+            System.out.println("\n" + eventName + " time = " + tnext);
             for (Element e : list) {
                 e.doStatistics(tnext - tcurr);
             }
@@ -39,7 +39,7 @@ public class Model {
             }
             printInfo();
         }
-        printResult();
+        printResult(time);
     }
 
     public void printInfo() {
@@ -48,16 +48,17 @@ public class Model {
         }
     }
 
-    public void printResult() {
+    public void printResult(double time) {
         System.out.println("\n-------------RESULTS-------------");
         for (Element e : list) {
             e.printResult();
-            if (e instanceof Process) {
-                Process p = (Process) e;
+            if (e instanceof Process p) {
                 System.out.println("mean length of queue = " +
                         p.getMeanQueue() / tcurr
-                        + "\nfailure probability = " +
-                        p.getFailure() / (double) p.getQuantity());
+                        + "\tfailure probability = " +
+                        p.getFailure() / (double) p.getQuantity()
+                        + "\tfailure = " + p.getFailure() +
+                        "\tload time = " + p.getTotalTime() / time);
             }
         }
     }

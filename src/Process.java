@@ -4,6 +4,8 @@ public class Process extends Element {
 
     public Process(double delay) {
         super(delay);
+        setTnext(Double.MAX_VALUE);
+
         queue = 0;
         maxqueue = Integer.MAX_VALUE;
         meanQueue = 0.0;
@@ -28,10 +30,18 @@ public class Process extends Element {
         super.outAct();
         super.setTnext(Double.MAX_VALUE);
         super.setState(0);
+
         if (getQueue() > 0) {
             setQueue(getQueue() - 1);
             super.setState(1);
+            super.setTotalTime(super.getTotalTime()+super.getDelay());
             super.setTnext(super.getTcurr() + super.getDelay());
+        }
+
+        var nextEl = getNextElement();
+        if (nextEl != null) {
+//            System.out.println("\n\n"+nextEl.getName());
+            nextEl.inAct();
         }
     }
 

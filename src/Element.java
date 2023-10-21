@@ -2,6 +2,7 @@ public class Element {
     private String name;
     private double tnext;
     private double delayMean, delayDev;
+    private double totalTime;
     private String distribution;
     private int quantity;
     private double tcurr;
@@ -12,7 +13,6 @@ public class Element {
 
 
     public Element() {
-
         tnext = Double.MAX_VALUE;
         delayMean = 1.0;
         distribution = "exp";
@@ -25,23 +25,9 @@ public class Element {
     }
 
     public Element(double delay) {
-        name = "anonymus";
         tnext = 0.0;
         delayMean = delay;
         distribution = "";
-        tcurr = tnext;
-        state = 0;
-        nextElement = null;
-        id = nextId;
-        nextId++;
-        name = "element" + id;
-    }
-
-    public Element(String nameOfElement, double delay) {
-        name = nameOfElement;
-        tnext = 0.0;
-        delayMean = delay;
-        distribution = "exp";
         tcurr = tnext;
         state = 0;
         nextElement = null;
@@ -54,19 +40,10 @@ public class Element {
         double delay = getDelayMean();
         if ("exp".equalsIgnoreCase(getDistribution())) {
             delay = FunRand.Exp(getDelayMean());
-        } else {
-            if ("norm".equalsIgnoreCase(getDistribution())) {
-                delay = FunRand.Norm(getDelayMean(),
-                        getDelayDev());
-            } else {
-                if ("unif".equalsIgnoreCase(getDistribution())) {
-                    delay = FunRand.Unif(getDelayMean(),
-                            getDelayDev());
-                } else {
-                    if ("".equalsIgnoreCase(getDistribution()))
-                        delay = getDelayMean();
-                }
-            }
+        } else if ("norm".equalsIgnoreCase(getDistribution())) {
+            delay = FunRand.Norm(getDelayMean(), getDelayDev());
+        } else if ("unif".equalsIgnoreCase(getDistribution())) {
+            delay = FunRand.Unif(getDelayMean(), getDelayDev());
         }
         return delay;
     }
@@ -117,7 +94,6 @@ public class Element {
     }
 
     public void inAct() {
-
     }
 
     public void outAct() {
@@ -153,9 +129,7 @@ public class Element {
     }
 
     public void printInfo() {
-        System.out.println(getName() + " state= " + state +
-                " quantity = " + quantity +
-                " tnext= " + tnext);
+        System.out.println(getName() + " state= " + state + " quantity = " + quantity + " tnext= " + tnext);
     }
 
     public String getName() {
@@ -168,5 +142,13 @@ public class Element {
 
     public void doStatistics(double delta) {
 
+    }
+
+    public double getTotalTime() {
+        return totalTime;
+    }
+
+    public void setTotalTime(double totalTime) {
+        this.totalTime = totalTime;
     }
 }
