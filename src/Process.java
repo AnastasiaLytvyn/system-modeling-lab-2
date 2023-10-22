@@ -38,10 +38,8 @@ public class Process extends Element {
             super.setTnext(super.getTcurr() + super.getDelay());
         }
 
-        var nextEl = getNextElement();
-        if (nextEl != null) {
-//            System.out.println("\n\n"+nextEl.getName());
-            nextEl.inAct();
+        if (getNextElements() != null) {
+            getNextElements().inAct();
         }
     }
 
