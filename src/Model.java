@@ -53,12 +53,11 @@ public class Model {
         for (Element e : list) {
             e.printResult();
             if (e instanceof Process p) {
-                System.out.println("mean length of queue = " +
-                        p.getMeanQueue() / tcurr
-                        + "\tfailure probability = " +
-                        p.getFailure() / (double) p.getQuantity()
-                        + "\tfailure = " + p.getFailure() +
-                        "\tload time = " + p.getTotalTime() / time);
+                System.out.println(
+                        "\tmean length of queue = " + p.getMeanQueue() / tcurr +
+                        "\tmean load time = " + p.getTotalTime() / time +
+                        "\tfailure probability = " + p.getFailure() / (double) (p.getQuantity() + p.getFailure()) +
+                        "\tfailure = " + p.getFailure());
             }
         }
     }

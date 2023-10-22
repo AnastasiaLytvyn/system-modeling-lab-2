@@ -129,7 +129,7 @@ public class Element {
     }
 
     public void printInfo() {
-        System.out.println(getName() + " state= " + state + " quantity = " + quantity + " tnext= " + tnext);
+        System.out.println(getName() + " state = " + state + " quantity = " + quantity + " tnext = " + tnext);
     }
 
     public String getName() {
